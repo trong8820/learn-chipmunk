@@ -50,3 +50,13 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Visual Studio cache/options directory
+.vs/
+
+# Project
+3rdparty
+CMakeSettings.json
+.vscode
+data
+build/
