@@ -15,16 +15,18 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 include_directories (
 	${CMAKE_SOURCE_DIR}/3rdparty/glad-0.1.36/include
 	${CMAKE_SOURCE_DIR}/3rdparty/glfw-3.3.8/include
+	${CMAKE_SOURCE_DIR}/3rdparty/chipmunk-7.0.3/include
 )
 
 # 3rdparty libs
 link_directories(
 	${CMAKE_SOURCE_DIR}/3rdparty/glad-0.1.36/lib
 	${CMAKE_SOURCE_DIR}/3rdparty/glfw-3.3.8/lib
+	${CMAKE_SOURCE_DIR}/3rdparty/chipmunk-7.0.3/lib
 )
 
 # 3rdparty link
-link_libraries(glad glfw3)
+link_libraries(glad glfw3 chipmunk)
 
 # Projects
 include_directories(

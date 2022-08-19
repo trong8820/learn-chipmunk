@@ -5,12 +5,16 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
+#include <chipmunk/chipmunk.h>
+
 GLFWwindow* g_pWindow;
 int g_width;
 int g_height;
 
+cpSpace* g_pSpace;
+
 static void window_size_callback(GLFWwindow* window, int width, int height);
-static void update();
+static void update(float deltaTime);
 static void draw();
 
 int main(int argc, char *argv[])
@@ -32,15 +36,25 @@ int main(int argc, char *argv[])
 
 	GLFWwindowsizefun prevWindowSizeCallback = glfwSetWindowSizeCallback(g_pWindow, window_size_callback);
 
+	g_pSpace = cpSpaceNew();
+
+	GLfloat deltaTime = 0.0f;
+	GLfloat lastFrame = 0.0f;
 	glfwSwapInterval(1);
 	while (glfwWindowShouldClose(g_pWindow) == GLFW_FALSE)
 	{
-		update();
+		GLfloat currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
+		update(deltaTime);
 		draw();
 
 		glfwSwapBuffers(g_pWindow);
 		glfwPollEvents();
 	}
+
+	cpSpaceFree(g_pSpace);
 
 	glfwSetWindowSizeCallback(g_pWindow, prevWindowSizeCallback);
 
@@ -49,7 +63,7 @@ int main(int argc, char *argv[])
 	return EXIT_SUCCESS;
 }
 
-static void update()
+static void update(float deltaTime)
 {
 
 }
