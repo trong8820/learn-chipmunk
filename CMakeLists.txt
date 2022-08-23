@@ -33,4 +33,7 @@ include_directories(
 	 ${CMAKE_SOURCE_DIR}/include
 )
 
-add_executable(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/src/main.c)
+add_executable(${PROJECT_NAME}
+	# ${CMAKE_SOURCE_DIR}/src/debug_draw.c
+	${CMAKE_SOURCE_DIR}/src/main.c
+)
