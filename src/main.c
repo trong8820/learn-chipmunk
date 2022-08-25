@@ -85,6 +85,8 @@ cpBody* g_pBallBody;
 cpShape* g_pBallShape;
 cpBody* g_pBoxBody;
 cpShape* g_pBoxShape;
+cpBody* g_pSegmentBody;
+cpShape* g_pSegmentShape;
 cpSpaceDebugDrawOptions g_spaceDebugDrawOptions;
 
 GLuint g_program;
@@ -209,7 +211,7 @@ int main(int argc, char *argv[])
 	cpSpaceSetGravity(g_pSpace, cpv(0.0, -100.0));
 
 	//g_pGroundShape = cpSegmentShapeNew(cpSpaceGetStaticBody(g_pSpace), cpv(20, 100), cpv(600, 50), 0);
-	g_pGroundShape = cpSegmentShapeNew(cpSpaceGetStaticBody(g_pSpace), cpv(20, 100), cpv(600, 100), 0);
+	g_pGroundShape = cpSegmentShapeNew(cpSpaceGetStaticBody(g_pSpace), cpv(20, 100), cpv(780, 100), 0);
 	cpShapeSetFriction(g_pGroundShape, 0.6);
 	//cpShapeSetElasticity(g_pGroundShape, 0.6);
 	cpShapeSetElasticity(g_pGroundShape, 1.0);
@@ -226,9 +228,17 @@ int main(int argc, char *argv[])
 	cpBodySetPosition(g_pBoxBody, cpv(300.0, 300.0));
 	cpBodySetAngle(g_pBoxBody, -45.0);
 
-	g_pBoxShape = cpSpaceAddShape(g_pSpace, cpBoxShapeNew(g_pBoxBody, 50, 100, 0.0));
+	g_pBoxShape = cpSpaceAddShape(g_pSpace, cpBoxShapeNew(g_pBoxBody, 50, 100, 10.0));
 	cpShapeSetFriction(g_pBoxShape, 0.6);
 	cpShapeSetElasticity(g_pBoxShape, 0.8);
+
+	g_pSegmentBody = cpSpaceAddBody(g_pSpace, cpBodyNew(1.0, cpMomentForSegment(10, cpv(0, 0), cpv(60, 0), 20)));
+	cpBodySetPosition(g_pSegmentBody, cpv(600.0, 300.0));
+	cpBodySetAngle(g_pSegmentBody, -45.0);
+
+	g_pSegmentShape = cpSpaceAddShape(g_pSpace, cpSegmentShapeNew(g_pSegmentBody, cpv(0, 0), cpv(60, 0), 20));
+	cpShapeSetFriction(g_pSegmentShape, 0.6);
+	cpShapeSetElasticity(g_pSegmentShape, 0.8);
 
 	g_spaceDebugDrawOptions.drawCircle          = drawCircle;
 	g_spaceDebugDrawOptions.drawSegment         = drawSegment;
@@ -258,6 +268,8 @@ int main(int argc, char *argv[])
 		glfwPollEvents();
 	}
 
+	//cpShapeFree(g_pSegmentShape);
+	//cpBodyFree(g_pSegmentBody);
 	//cpShapeFree(g_pBoxShape);
 	//cpBodyFree(g_pBoxBody);
 	//cpShapeFree(g_pBallShape);
